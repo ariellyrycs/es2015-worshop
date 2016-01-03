@@ -1,0 +1,17 @@
+{
+  "src": {
+    "watch": {
+      "js": "./app/scripts/**/*.js"
+    },
+    "babel": [
+      "./app/scripts/app.js"
+    ],
+    "eslint": {
+      "files": ["./app/scripts/**/*.js"],
+      "rc": "./tasks/.eslintrc"
+    }
+  },
+  "dest": {
+    "babel": "./build/scripts/"
+  }
+}
