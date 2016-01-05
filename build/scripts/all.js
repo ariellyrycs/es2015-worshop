@@ -25,7 +25,7 @@ Object.defineProperty(exports, '__esModule', {
 var k = function k() {
   return 'hehe';
 };
-debugger;
+
 exports['default'] = k;
 module.exports = exports['default'];
 
