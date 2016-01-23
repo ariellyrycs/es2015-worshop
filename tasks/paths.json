@@ -4,7 +4,9 @@
       "js": "./app/scripts/**/*.js"
     },
     "babel": [
-      "./app/scripts/app.js"
+      "./app/scripts/app.js",
+      "./app/scripts/core/select.js",
+      "./app/scripts/core/request.js"
     ],
     "eslint": {
       "files": ["./app/scripts/**/*.js"],

@@ -1,9 +1,3 @@
-import Ajax from './core/Ajax.js';
-console.log(k());
-new Promise(function (resolve, reject) {
-  setTimeout(() => {
-    resolve();
-  }, 10000);
-}).then(() => {
-  console.log('jjojojo');
-});
+
+var rq = require('./core/request');
+console.log(rq.get('/users').then(function () {console.log(arguments)}));
