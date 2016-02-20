@@ -1,0 +1,18 @@
+
+.out, .modal-content {
+  display: none;
+}
+
+.modal.in, .modal-content.show {
+  display: block;
+  padding-left: 0px;
+}
+
+.task-table tr:hover a {
+  float:right;
+  visibility: visible;
+}
+
+.task-table tr a {
+    visibility: hidden;
+}

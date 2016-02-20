@@ -1,0 +1,21 @@
+{
+  "name": "es2015-worshop",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ariellyrycs/es2015-worshop",
+  "authors": [
+    "Ariel Robles <arobles@switchfly.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "bootswatch-dist": "superhero",
+    "form-serialize": "~0.6.0",
+    "barn": "~0.2.0"
+  }
+}

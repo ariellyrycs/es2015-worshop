@@ -5,8 +5,9 @@
     },
     "babel": [
       "./app/scripts/app.js",
-      "./app/scripts/core/select.js",
-      "./app/scripts/core/request.js"
+      "./app/scripts/utils/select.js",
+      "./app/scripts/utils/request.js",
+      "./app/scripts/utils/request.js"
     ],
     "eslint": {
       "files": ["./app/scripts/**/*.js"],

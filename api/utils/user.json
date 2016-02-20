@@ -1,0 +1,20 @@
+[
+    {
+        "id": "user_1455591018839",
+        "name": "jorge",
+        "lastName": "locas",
+        "email": "jorge@nearsoft.com"
+    },
+    {
+        "id": "user_1455591029918",
+        "name": "juan",
+        "lastName": "perez",
+        "email": "perez@nearsoft.com"
+    },
+    {
+        "id": "user_1455606781217",
+        "name": "hjj",
+        "lastName": "bhj",
+        "email": "hj"
+    }
+]

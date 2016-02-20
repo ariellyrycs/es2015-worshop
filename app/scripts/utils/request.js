@@ -25,6 +25,14 @@ class Request {
   post(url, data) {
     return this.ajax(url, 'POST', JSON.stringify(data));
   }
+
+  update(url, data) {
+    return this.ajax(url, 'PUT', JSON.stringify(data));
+  }
+
+  delete(url, data) {
+    return this.ajax(url, 'DELETE', JSON.stringify(data));
+  }
 }
 
 module.exports = new Request();

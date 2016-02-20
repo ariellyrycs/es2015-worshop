@@ -1,51 +1,32 @@
-var JsonDB = require('node-json-db');
-var db = new JsonDB('db', true, true);
+'use strict';
 
-module.exports = {
+const JSONDB = require('./../utils/db');
+const userDB = new JSONDB('user');
+
+class UserController {
+
   findAllUsers(req, res) {
-    try {
-      var users = db.getData('/users');
-      res.send({status: 'OK', data: users});
-    } catch(error) {
-      res.statusCode = 500;
-      console.error('Error', res.statusCode, err.message);
-    }
-  },
+    res.send({status: 'OK', data: userDB.data});
+  }
 
   findUserById(req, res) {
-    try {
-      var id = req.params.id;
-      var users = db.getData('/users');
-      var userIndex = users.findIndex((user) => {
-        return user.user_id === id;
-      });
-      res.send({status: 'OK', data: users[userIndex]});
-    } catch(error) {
-      res.statusCode = 500;
-      console.error('Error', res.statusCode, err.message);
-    }
-  },
+    var id = req.params.id;
+    res.send({
+      status: 'OK',
+      data: userDB.data.find(user => user.id === id)
+    });
+  }
 
   addUser(req, res) {
-    if (!req.body) return res.sendStatus(400)
-    console.log(req.body);
-    var users = db.getData('/users');
-    db.push('/users[' + users.length +']', {
-      "user_id": 'user_' + (new Date()).getTime(),
-      "name": req.body.name,
-      "lastName": req.body.lastName
+    if (!req.body) return res.sendStatus(400);
+    userDB.addItem({
+      id: `user_${new Date().getTime()}`,
+      name: req.body['first-name'],
+      lastName: req.body['last-name'],
+      email: req.body['user-email']
     });
-    /*
-      user.save(function(err) {
-          var toPrint = null;
-          if(err) {
-              console.log('Error while saving user: ' + err);
-              res.send({ error:err });
-          } else {
-              console.log("User created");
-              toPrint =  res.send({ status: 'OK', user:user });
-          }
-          return toPrint;
-      });*/
-  },
-};
+    res.send({ status: 'OK', data: userDB.data});
+  }
+}
+
+module.exports = new UserController();

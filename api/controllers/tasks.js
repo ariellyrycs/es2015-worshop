@@ -1,58 +1,55 @@
-var JsonDB = require('node-json-db');
-var db = new JsonDB('db', true, true);
+'use strict';
 
-module.exports = {
-  findAlltasks(req, res) {
-    try {
-      var tasks = db.getData('/tasks');
-      res.send({status: 'OK', data: tasks});
-    } catch(error) {
-      res.statusCode = 500;
-      console.error('Error', res.statusCode, err.message);
-    }
-  },
+const JSONDB = require('./../utils/db');
+const taskDB = new JSONDB('task');
 
-  findtaskById(req, res) {
-    try {
-      var id = req.params.id;
-      var tasks = db.getData('/tasks');
-      var taskIndex = tasks.findIndex((task) => {
-        return task.task_id === id;
-      });
-      res.send({status: 'OK', data: tasks[taskIndex]});
-    } catch(error) {
-      res.statusCode = 500;
-      console.error('Error', res.statusCode, err.message);
-    }
-  },
+
+class TaskController {
+  findAllTasks(req, res) {
+    res.send({status: 'OK', data: taskDB.data});
+  }
+
+  findTaskById(req, res) {
+    var id = req.params.id;
+    res.send({
+      status: 'OK',
+      data: taskDB.data.find(user => task.id === id)
+    });
+  }
 
   addTask(req, res) {
-    if (!req.body) return res.sendStatus(400)
-    var newTask = {
-      "task_id": 'task_' + (new Date()).getTime(),
-      "creator_id": req.body.user_id,
-      "description": req.body.description,
-      "time": req.body.time,
-      "date": req.body.date
+    if (!req.body) return res.sendStatus(400);
+    taskDB.addItem({
+      id: `task_${new Date().getTime()}`,
+      creator_id: req.body.user,
+      description: req.body.description,
+      time: req.body.time,
+      date: req.body.date
+    });
+    res.send({ status: 'OK', data: taskDB.data });
+  }
+
+  deleteTask(req, res) {
+    var taskId = req.params.id;
+    if (!taskId) return res.sendStatus(400);
+    //TODO manage error
+    taskDB.deleteItem(taskId);
+    res.send({ status: 'OK', data: taskDB.data });
+  }
+
+  updateTask(req, res) {
+    let taskId = req.params.id;
+    if (!taskId || !req.body) return res.sendStatus(400);
+    let currentObject = {
+      id: req.params.id,
+      creator_id: req.body.user,
+      description: req.body.description,
+      time: req.body.time,
+      date: req.body.date
     };
-    console.log(newTask);
-    db.push("/tesk", newTask);
-    /*
-      var user = new User({
-          accessToken:    req.body.accessToken,
-          idProfile :    req.body.idProfile,
-          name:    req.body.name
-      });
-      user.save(function(err) {
-          var toPrint = null;
-          if(err) {
-              console.log('Error while saving user: ' + err);
-              res.send({ error:err });
-          } else {
-              console.log("User created");
-              toPrint =  res.send({ status: 'OK', user:user });
-          }
-          return toPrint;
-      });*/
-  },
-};
+    taskDB.updateItem(taskId, currentObject);
+    res.send({ status: 'OK', data: taskDB.data });
+  }
+}
+
+module.exports = new TaskController();
