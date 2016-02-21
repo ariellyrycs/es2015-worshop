@@ -1,4 +1,5 @@
-let rq = require('./../utils/request');
+import rq  from './../utils/request';
+
 class Base {
   constructor (fields, url) {
     this._url = url !== undefined ? url : '';
@@ -6,4 +7,4 @@ class Base {
   }
 }
 
-module.exports = Base;
+export default Base;

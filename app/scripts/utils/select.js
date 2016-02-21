@@ -87,4 +87,4 @@ let $$ = (selector) => {
   return document.findAll(selector);
 };
 
-module.exports = $$;
+export default $$;

@@ -1,10 +1,10 @@
 /*globals formSerialize*/
-let $$ = require('./utils/select');
-let rq = require('./utils/request');
-let UI = require('./ui');
-let fire = require('./utils/fire');
+import $$ from './utils/select';
+import rq from './utils/request';
+import UI from './ui';
+import fire from './utils/fire';
 
-var events = ((userCollection, taskCollection) => {
+let events = ((userCollection, taskCollection) => {
   let sourceModal = $$('#source-modal');
   let userModal = sourceModal.find('#user-modal');
   let taskModal = sourceModal.find('#task-modal');
@@ -43,7 +43,7 @@ var events = ((userCollection, taskCollection) => {
 
   deleteTask.on('click', e => {
     e.preventDefault();
-    let deleteIds = Array.from(taskTable.findAll('input[type=checkbox]:checked'))
+    let deleteIds = Array.import(taskTable.findAll('input[type=checkbox]:checked'))
       .map(task => task.parent('tr').data('task-id'));
     taskCollection.deleteByIds(deleteIds);
   });
@@ -64,7 +64,7 @@ var events = ((userCollection, taskCollection) => {
     UI.setFilterUserId(userId);
     UI.updateTasks(taskCollection.fetch());
   });
-  
+
   showAllUsers.on('click', () => {
     UI.setFilterUserId(null);
     UI.updateTasks(taskCollection.fetch());
@@ -80,4 +80,4 @@ var events = ((userCollection, taskCollection) => {
   });
 });
 
-module.exports = events;
+export default events;

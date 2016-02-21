@@ -31,4 +31,4 @@ class Fire {
   }
 }
 
-module.exports = new Fire();
+export default new Fire();

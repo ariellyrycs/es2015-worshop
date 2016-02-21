@@ -1,8 +1,8 @@
 /*globals localStorage*/
-let Collection = require('./collection');
+import Collection from './collection';
 
 
-class Serialize {
+ class Serialize {
   constructor() {
     this.barn = new Barn(sessionStorage);
   }
@@ -26,4 +26,4 @@ class Serialize {
 }
 
 
-module.exports = new Serialize();
+export default new Serialize();

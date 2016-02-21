@@ -1,6 +1,6 @@
 'use strict';
 
-const express = require('express'),
+let express = require('express'),
   app = express(),
   fs = require('fs'),
   path = require('path'),

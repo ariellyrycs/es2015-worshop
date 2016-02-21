@@ -1,6 +1,5 @@
-let $$ = require('./utils/select'),
-saferHTML = require("./utils/safer-html");
-
+import $$ from './utils/select';
+import saferHTML from "./utils/safer-html";
 
 class UI {
   constructor() {
@@ -17,21 +16,19 @@ class UI {
     this._taskDateField = this._taskForm.find('[name="date"]');
     this._modalTaskTitle = this._sourceModal.find('.dynamic-task-title');
     this._filterUserId = null;
-
   }
 
   updateUsers(users) {
     /*User*/
     this._usersListContainer.innerHTML = users.reduce((usersHTML, user) => {
-      return `${usersHTML}
+      return usersHTML + saferHTML`
       <li>
         <a href='#' data-user-id="${user.id}">${user.name} ${user.lastName}</a>
       </li>`;
-    }, '');
-
+    }, '')
     /*User-task*/
     this._userInTask.innerHTML = users.reduce((usersHTML, user) => {
-      return `${usersHTML}
+      return usersHTML + saferHTML`
       <option value="${user.id}">${user.name} ${user.lastName}</option>`;
     }, '<option>Select user</option>');
   }
@@ -44,7 +41,7 @@ class UI {
 
     this._tasksContainer.innerHTML = filteredTasks.reduce((tasksHTML, task, index) => {
       if(task) {
-        return `${tasksHTML}
+        return tasksHTML + saferHTML`
         <tr data-task-id='${task.id}'>
           <th scope="row">${index + 1}</th>
           <td><input type="checkbox"></td>
@@ -101,4 +98,4 @@ class UI {
   }
 }
 
-module.exports = new UI();
+export default new UI();

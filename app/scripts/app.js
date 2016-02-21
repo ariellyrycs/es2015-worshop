@@ -1,13 +1,13 @@
 
-let rq = require('./utils/request');
-let $$ = require('./utils/select');
-let Collection = require('./models/collection');
-let UI = require('./ui');
-let serialize = require('./models/serialize');
-let fire = require('./utils/fire');
-let Task = require('./models/task');
-let User = require('./models/user');
-let events = require('./events');
+import rq from './utils/request';
+import $$ from './utils/select';
+import Collection from './models/collection';
+import UI from './ui';
+import serialize from './models/serialize';
+import fire from './utils/fire';
+import Task from './models/task';
+import User from './models/user';
+import events from './events';
 
 class Application {
   constructor() {

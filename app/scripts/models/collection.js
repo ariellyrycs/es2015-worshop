@@ -1,8 +1,8 @@
-let rq = require('./../utils/request');
-let serialize = require('./serialize');
-let fire = require('./../utils/fire');
+import rq from './../utils/request';
+import serialize from './serialize';
+import fire from './../utils/fire';
 
-class Collection {
+export default class Collection {
   constructor (model, url, collectionName, event, models) {
     this._model = model;
     this._collectionName = collectionName;
@@ -65,5 +65,3 @@ class Collection {
     fire.fire(this._event);
   }
 }
-
-module.exports = Collection;

@@ -1,4 +1,4 @@
-let Base  = require('./base');
+import Base from './base';
 
 
 class Task extends Base {
@@ -32,4 +32,4 @@ class Task extends Base {
   }
 }
 
-module.exports = Task;
+export default Task;

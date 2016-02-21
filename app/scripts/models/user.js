@@ -1,4 +1,4 @@
-let Base = require('./base');
+import Base from './base';
 
 class User extends Base {
   constructor(data) {
@@ -26,4 +26,4 @@ class User extends Base {
   }
 }
 
-module.exports = User;
+export default User;
