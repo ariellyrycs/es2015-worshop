@@ -1,67 +1,67 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var _request = require('./utils/request');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _request2 = _interopRequireDefault(_request);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var _select = require('./utils/select');
+var _utilsRequest = require('./utils/request');
 
-var _select2 = _interopRequireDefault(_select);
+var _utilsRequest2 = _interopRequireDefault(_utilsRequest);
 
-var _collection = require('./models/collection');
+var _utilsSelect = require('./utils/select');
 
-var _collection2 = _interopRequireDefault(_collection);
+var _utilsSelect2 = _interopRequireDefault(_utilsSelect);
+
+var _modelsCollection = require('./models/collection');
+
+var _modelsCollection2 = _interopRequireDefault(_modelsCollection);
 
 var _ui = require('./ui');
 
 var _ui2 = _interopRequireDefault(_ui);
 
-var _serialize = require('./models/serialize');
+var _modelsSerialize = require('./models/serialize');
 
-var _serialize2 = _interopRequireDefault(_serialize);
+var _modelsSerialize2 = _interopRequireDefault(_modelsSerialize);
 
-var _fire = require('./utils/fire');
+var _utilsFire = require('./utils/fire');
 
-var _fire2 = _interopRequireDefault(_fire);
+var _utilsFire2 = _interopRequireDefault(_utilsFire);
 
-var _task = require('./models/task');
+var _modelsTask = require('./models/task');
 
-var _task2 = _interopRequireDefault(_task);
+var _modelsTask2 = _interopRequireDefault(_modelsTask);
 
-var _user = require('./models/user');
+var _modelsUser = require('./models/user');
 
-var _user2 = _interopRequireDefault(_user);
+var _modelsUser2 = _interopRequireDefault(_modelsUser);
 
 var _events = require('./events');
 
 var _events2 = _interopRequireDefault(_events);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Application = function Application() {
   var _this = this;
 
   _classCallCheck(this, Application);
 
-  this._userCollection = new _collection2.default(_user2.default, '/users', 'users', 'userChange');
-  this._taskCollection = new _collection2.default(_task2.default, '/tasks', 'tasks', 'taskChange');
+  this._userCollection = new _modelsCollection2['default'](_modelsUser2['default'], '/users', 'users', 'userChange');
+  this._taskCollection = new _modelsCollection2['default'](_modelsTask2['default'], '/tasks', 'tasks', 'taskChange');
 
-  _fire2.default.subscribe('userChange', null, function () {
+  _utilsFire2['default'].subscribe('userChange', null, function () {
     var users = _this._userCollection.fetch();
-    _ui2.default.updateUsers(users);
+    _ui2['default'].updateUsers(users);
   });
   this._userCollection.initialize();
 
-  _fire2.default.subscribe('taskChange', null, function () {
+  _utilsFire2['default'].subscribe('taskChange', null, function () {
     var tasks = _this._taskCollection.fetch();
-    _ui2.default.updateTasks(tasks);
+    _ui2['default'].updateTasks(tasks);
   });
   this._taskCollection.initialize();
 
-  (0, _events2.default)(this._userCollection, this._taskCollection);
+  (0, _events2['default'])(this._userCollection, this._taskCollection);
 };
 
 (function () {
@@ -69,50 +69,49 @@ var Application = function Application() {
 })();
 
 },{"./events":2,"./models/collection":4,"./models/serialize":5,"./models/task":6,"./models/user":7,"./ui":8,"./utils/fire":9,"./utils/request":10,"./utils/select":12}],2:[function(require,module,exports){
+/*globals formSerialize*/
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _select = require('./utils/select');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _select2 = _interopRequireDefault(_select);
+var _utilsSelect = require('./utils/select');
 
-var _request = require('./utils/request');
+var _utilsSelect2 = _interopRequireDefault(_utilsSelect);
 
-var _request2 = _interopRequireDefault(_request);
+var _utilsRequest = require('./utils/request');
+
+var _utilsRequest2 = _interopRequireDefault(_utilsRequest);
 
 var _ui = require('./ui');
 
 var _ui2 = _interopRequireDefault(_ui);
 
-var _fire = require('./utils/fire');
+var _utilsFire = require('./utils/fire');
 
-var _fire2 = _interopRequireDefault(_fire);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/*globals formSerialize*/
+var _utilsFire2 = _interopRequireDefault(_utilsFire);
 
 var events = function events(userCollection, taskCollection) {
-  var sourceModal = (0, _select2.default)('#source-modal');
+  var sourceModal = (0, _utilsSelect2['default'])('#source-modal');
   var userModal = sourceModal.find('#user-modal');
   var taskModal = sourceModal.find('#task-modal');
-  var taskTable = (0, _select2.default)('#show-tasks');
-  var deleteTask = (0, _select2.default)('#delete-task');
+  var taskTable = (0, _utilsSelect2['default'])('#show-tasks');
+  var deleteTask = (0, _utilsSelect2['default'])('#delete-task');
   var userModalForm = userModal.find('form');
   var taskModalFrom = taskModal.find('form');
-  var usersList = (0, _select2.default)('#users');
-  var showAllUsers = (0, _select2.default)('#show-all-users');
+  var usersList = (0, _utilsSelect2['default'])('#users');
+  var showAllUsers = (0, _utilsSelect2['default'])('#show-all-users');
 
-  _fire2.default.subscribe('userChange', null, function () {
-    _ui2.default.hideModal();
+  _utilsFire2['default'].subscribe('userChange', null, function () {
+    _ui2['default'].hideModal();
     userModalForm.reset();
   });
 
-  _fire2.default.subscribe('taskChange', null, function () {
-    _ui2.default.hideModal();
+  _utilsFire2['default'].subscribe('taskChange', null, function () {
+    _ui2['default'].hideModal();
     taskModalFrom.reset();
   });
 
@@ -134,7 +133,7 @@ var events = function events(userCollection, taskCollection) {
 
   deleteTask.on('click', function (e) {
     e.preventDefault();
-    var deleteIds = Array.import(taskTable.findAll('input[type=checkbox]:checked')).map(function (task) {
+    var deleteIds = Array['import'](taskTable.findAll('input[type=checkbox]:checked')).map(function (task) {
       return task.parent('tr').data('task-id');
     });
     taskCollection.deleteByIds(deleteIds);
@@ -146,52 +145,53 @@ var events = function events(userCollection, taskCollection) {
     var taskId = taskElement.data('task-id');
 
     taskModalFrom.reset();
-    _ui2.default.showEditModal(taskModal, taskCollection.findById(taskId));
-    _ui2.default.setTaskId(taskId);
-    _ui2.default.changeModalHeaderText(true);
+    _ui2['default'].showEditModal(taskModal, taskCollection.findById(taskId));
+    _ui2['default'].setTaskId(taskId);
+    _ui2['default'].changeModalHeaderText(true);
   });
 
   usersList.delegate('click', 'a', function (e) {
     var userId = e.target.data('user-id');
-    _ui2.default.setFilterUserId(userId);
-    _ui2.default.updateTasks(taskCollection.fetch());
+    _ui2['default'].setFilterUserId(userId);
+    _ui2['default'].updateTasks(taskCollection.fetch());
   });
 
   showAllUsers.on('click', function () {
-    _ui2.default.setFilterUserId(null);
-    _ui2.default.updateTasks(taskCollection.fetch());
+    _ui2['default'].setFilterUserId(null);
+    _ui2['default'].updateTasks(taskCollection.fetch());
   });
 
   sourceModal.delegate('click', '[data-dismiss=modal]', function () {
-    return _ui2.default.hideModal();
+    return _ui2['default'].hideModal();
   });
-  (0, _select2.default)('#add-new-user').on('click', function () {
-    return _ui2.default.showModal(userModal);
+  (0, _utilsSelect2['default'])('#add-new-user').on('click', function () {
+    return _ui2['default'].showModal(userModal);
   });
-  (0, _select2.default)('#add-new-task').on('click', function () {
-    _ui2.default.showModal(taskModal);
+  (0, _utilsSelect2['default'])('#add-new-task').on('click', function () {
+    _ui2['default'].showModal(taskModal);
     taskModalFrom.reset();
-    _ui2.default.removeTaskEditableClass();
-    _ui2.default.changeModalHeaderText();
+    _ui2['default'].removeTaskEditableClass();
+    _ui2['default'].changeModalHeaderText();
   });
 };
 
-exports.default = events;
+exports['default'] = events;
+module.exports = exports['default'];
 
 },{"./ui":8,"./utils/fire":9,"./utils/request":10,"./utils/select":12}],3:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _request = require('./../utils/request');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _request2 = _interopRequireDefault(_request);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _utilsRequest = require('./../utils/request');
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _utilsRequest2 = _interopRequireDefault(_utilsRequest);
 
 var Base = function Base(fields, url) {
   _classCallCheck(this, Base);
@@ -200,34 +200,35 @@ var Base = function Base(fields, url) {
   this._fields = fields !== undefined ? fields : {};
 };
 
-exports.default = Base;
+exports['default'] = Base;
+module.exports = exports['default'];
 
 },{"./../utils/request":10}],4:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _request = require('./../utils/request');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _request2 = _interopRequireDefault(_request);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var _utilsRequest = require('./../utils/request');
+
+var _utilsRequest2 = _interopRequireDefault(_utilsRequest);
 
 var _serialize = require('./serialize');
 
 var _serialize2 = _interopRequireDefault(_serialize);
 
-var _fire = require('./../utils/fire');
+var _utilsFire = require('./../utils/fire');
 
-var _fire2 = _interopRequireDefault(_fire);
+var _utilsFire2 = _interopRequireDefault(_utilsFire);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Collection = function () {
+var Collection = (function () {
   function Collection(model, url, collectionName, event, models) {
     _classCallCheck(this, Collection);
 
@@ -260,24 +261,24 @@ var Collection = function () {
       var _this2 = this;
 
       var data = undefined;
-      if (_serialize2.default.size(this._collectionName) === 0) {
-        return _request2.default.get(this._urlPlural).then(function (res) {
+      if (_serialize2['default'].size(this._collectionName) === 0) {
+        return _utilsRequest2['default'].get(this._urlPlural).then(function (res) {
           data = res.data;
-          _serialize2.default.addCollection(_this2._collectionName, data);
+          _serialize2['default'].addCollection(_this2._collectionName, data);
           _this2.resetLocalModels(data);
-          _fire2.default.fire(_this2._event);
+          _utilsFire2['default'].fire(_this2._event);
         });
       }
-      data = _serialize2.default.getCollection(this._collectionName);
+      data = _serialize2['default'].getCollection(this._collectionName);
       this.resetLocalModels(data);
-      _fire2.default.fire(this._event);
+      _utilsFire2['default'].fire(this._event);
     }
   }, {
     key: 'add',
     value: function add(data) {
       var _this3 = this;
 
-      return _request2.default.post(this._url, data).then(function (res) {
+      return _utilsRequest2['default'].post(this._url, data).then(function (res) {
         return _this3.save(res.data);
       });
     }
@@ -287,11 +288,11 @@ var Collection = function () {
       var _this4 = this;
 
       var fullfillments = ids.map(function (id) {
-        return _request2.default.delete(_this4._url + '/' + id);
+        return _utilsRequest2['default']['delete'](_this4._url + '/' + id);
       });
       return Promise.all(fullfillments).then(function (res) {
         return _this4.save(res[res.length - 1].data);
-      }).catch(function () {
+      })['catch'](function () {
         return console.log('ups! something went wrong');
       });
     }
@@ -300,7 +301,7 @@ var Collection = function () {
     value: function update(id, data) {
       var _this5 = this;
 
-      _request2.default.update(this._url + '/' + id, data).then(function (res) {
+      _utilsRequest2['default'].update(this._url + '/' + id, data).then(function (res) {
         return _this5.save(res.data);
       });
     }
@@ -319,35 +320,37 @@ var Collection = function () {
   }, {
     key: 'save',
     value: function save(data) {
-      _serialize2.default.addCollection(this._collectionName, data);
+      _serialize2['default'].addCollection(this._collectionName, data);
       this.resetLocalModels(data);
-      _fire2.default.fire(this._event);
+      _utilsFire2['default'].fire(this._event);
     }
   }]);
 
   return Collection;
-}();
+})();
 
-exports.default = Collection;
+exports['default'] = Collection;
+module.exports = exports['default'];
 
 },{"./../utils/fire":9,"./../utils/request":10,"./serialize":5}],5:[function(require,module,exports){
+/*globals localStorage*/
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /*globals localStorage*/
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var _collection = require('./collection');
 
 var _collection2 = _interopRequireDefault(_collection);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Serialize = function () {
+var Serialize = (function () {
   function Serialize() {
     _classCallCheck(this, Serialize);
 
@@ -375,8 +378,8 @@ var Serialize = function () {
         _iteratorError = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
+          if (!_iteratorNormalCompletion && _iterator['return']) {
+            _iterator['return']();
           }
         } finally {
           if (_didIteratorError) {
@@ -398,38 +401,39 @@ var Serialize = function () {
   }]);
 
   return Serialize;
-}();
+})();
 
-exports.default = new Serialize();
+exports['default'] = new Serialize();
+module.exports = exports['default'];
 
 },{"./collection":4}],6:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _base = require('./base');
 
 var _base2 = _interopRequireDefault(_base);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Task = function (_Base) {
+var Task = (function (_Base) {
   _inherits(Task, _Base);
 
   function Task(data) {
     _classCallCheck(this, Task);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Task).call(this, data, '/task'));
+    _get(Object.getPrototypeOf(Task.prototype), 'constructor', this).call(this, data, '/task');
   }
 
   /** @return {String}*/
@@ -441,7 +445,6 @@ var Task = function (_Base) {
     }
 
     /** @return {String}*/
-
   }, {
     key: 'creatorId',
     get: function get() {
@@ -449,7 +452,6 @@ var Task = function (_Base) {
     }
 
     /** @return {String}*/
-
   }, {
     key: 'description',
     get: function get() {
@@ -457,7 +459,6 @@ var Task = function (_Base) {
     }
 
     /** @return {String}*/
-
   }, {
     key: 'time',
     get: function get() {
@@ -465,7 +466,6 @@ var Task = function (_Base) {
     }
 
     /** @return {String}*/
-
   }, {
     key: 'date',
     get: function get() {
@@ -474,38 +474,39 @@ var Task = function (_Base) {
   }]);
 
   return Task;
-}(_base2.default);
+})(_base2['default']);
 
-exports.default = Task;
+exports['default'] = Task;
+module.exports = exports['default'];
 
 },{"./base":3}],7:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _base = require('./base');
 
 var _base2 = _interopRequireDefault(_base);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var User = function (_Base) {
+var User = (function (_Base) {
   _inherits(User, _Base);
 
   function User(data) {
     _classCallCheck(this, User);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(User).call(this, data, '/user'));
+    _get(Object.getPrototypeOf(User.prototype), 'constructor', this).call(this, data, '/user');
   }
 
   /** @return {String}*/
@@ -517,7 +518,6 @@ var User = function (_Base) {
     }
 
     /** @return {String}*/
-
   }, {
     key: 'name',
     get: function get() {
@@ -525,7 +525,6 @@ var User = function (_Base) {
     }
 
     /** @return {String}*/
-
   }, {
     key: 'lastName',
     get: function get() {
@@ -533,7 +532,6 @@ var User = function (_Base) {
     }
 
     /** @return {String}*/
-
   }, {
     key: 'email',
     get: function get() {
@@ -542,47 +540,48 @@ var User = function (_Base) {
   }]);
 
   return User;
-}(_base2.default);
+})(_base2['default']);
 
-exports.default = User;
+exports['default'] = User;
+module.exports = exports['default'];
 
 },{"./base":3}],8:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _templateObject = _taggedTemplateLiteral(['\n      <li>\n        <a href=\'#\' data-user-id="', '">', ' ', '</a>\n      </li>'], ['\n      <li>\n        <a href=\'#\' data-user-id="', '">', ' ', '</a>\n      </li>']),
     _templateObject2 = _taggedTemplateLiteral(['\n      <option value="', '">', ' ', '</option>'], ['\n      <option value="', '">', ' ', '</option>']),
     _templateObject3 = _taggedTemplateLiteral(['\n        <tr data-task-id=\'', '\'>\n          <th scope="row">', '</th>\n          <td><input type="checkbox"></td>\n          <td>', '</td>\n          <td>', '</td>\n          <td>', '</td>\n          <td><a href="#" class="btn btn-info btn-xs edit-task">Edit</a></td>\n        </tr>'], ['\n        <tr data-task-id=\'', '\'>\n          <th scope="row">', '</th>\n          <td><input type="checkbox"></td>\n          <td>', '</td>\n          <td>', '</td>\n          <td>', '</td>\n          <td><a href="#" class="btn btn-info btn-xs edit-task">Edit</a></td>\n        </tr>']);
 
-var _select = require('./utils/select');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _select2 = _interopRequireDefault(_select);
-
-var _saferHtml = require('./utils/safer-html');
-
-var _saferHtml2 = _interopRequireDefault(_saferHtml);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _utilsSelect = require('./utils/select');
 
-var UI = function () {
+var _utilsSelect2 = _interopRequireDefault(_utilsSelect);
+
+var _utilsSaferHtml = require("./utils/safer-html");
+
+var _utilsSaferHtml2 = _interopRequireDefault(_utilsSaferHtml);
+
+var UI = (function () {
   function UI() {
     _classCallCheck(this, UI);
 
-    this._usersListContainer = (0, _select2.default)('#users');
-    this._tasksContainer = (0, _select2.default)('#show-tasks tbody')[0];
-    this._contentModals = (0, _select2.default)('.modal-content');
-    this._sourceModal = (0, _select2.default)('#source-modal');
-    this._overLay = (0, _select2.default)('.modal-backdrop')[0];
-    this._userInTask = (0, _select2.default)('#task-user');
+    this._usersListContainer = (0, _utilsSelect2['default'])('#users');
+    this._tasksContainer = (0, _utilsSelect2['default'])('#show-tasks tbody')[0];
+    this._contentModals = (0, _utilsSelect2['default'])('.modal-content');
+    this._sourceModal = (0, _utilsSelect2['default'])('#source-modal');
+    this._overLay = (0, _utilsSelect2['default'])('.modal-backdrop')[0];
+    this._userInTask = (0, _utilsSelect2['default'])('#task-user');
     this._taskForm = this._sourceModal.find('#task-modal form');
     this._taskUserField = this._taskForm.find('[name="user"]');
     this._taskDescriptionField = this._taskForm.find('[name="description"]');
@@ -597,11 +596,11 @@ var UI = function () {
     value: function updateUsers(users) {
       /*User*/
       this._usersListContainer.innerHTML = users.reduce(function (usersHTML, user) {
-        return usersHTML + (0, _saferHtml2.default)(_templateObject, user.id, user.name, user.lastName);
+        return usersHTML + (0, _utilsSaferHtml2['default'])(_templateObject, user.id, user.name, user.lastName);
       }, '');
       /*User-task*/
       this._userInTask.innerHTML = users.reduce(function (usersHTML, user) {
-        return usersHTML + (0, _saferHtml2.default)(_templateObject2, user.id, user.name, user.lastName);
+        return usersHTML + (0, _utilsSaferHtml2['default'])(_templateObject2, user.id, user.name, user.lastName);
       }, '<option>Select user</option>');
     }
   }, {
@@ -618,7 +617,7 @@ var UI = function () {
 
       this._tasksContainer.innerHTML = filteredTasks.reduce(function (tasksHTML, task, index) {
         if (task) {
-          return tasksHTML + (0, _saferHtml2.default)(_templateObject3, task.id, index + 1, task.description, task.time, task.date);
+          return tasksHTML + (0, _utilsSaferHtml2['default'])(_templateObject3, task.id, index + 1, task.description, task.time, task.date);
         }
       }, '');
     }
@@ -674,8 +673,8 @@ var UI = function () {
         _iteratorError = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
+          if (!_iteratorNormalCompletion && _iterator['return']) {
+            _iterator['return']();
           }
         } finally {
           if (_didIteratorError) {
@@ -697,9 +696,10 @@ var UI = function () {
   }]);
 
   return UI;
-}();
+})();
 
-exports.default = new UI();
+exports['default'] = new UI();
+module.exports = exports['default'];
 
 },{"./utils/safer-html":11,"./utils/select":12}],9:[function(require,module,exports){
 "use strict";
@@ -708,11 +708,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Fire = function () {
+var Fire = (function () {
   function Fire() {
     _classCallCheck(this, Fire);
 
@@ -754,8 +754,8 @@ var Fire = function () {
         _iteratorError = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
+          if (!_iteratorNormalCompletion && _iterator["return"]) {
+            _iterator["return"]();
           }
         } finally {
           if (_didIteratorError) {
@@ -772,22 +772,23 @@ var Fire = function () {
   }]);
 
   return Fire;
-}();
+})();
 
-exports.default = new Fire();
+exports["default"] = new Fire();
+module.exports = exports["default"];
 
 },{}],10:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var Request = function () {
+var Request = (function () {
   function Request() {
     _classCallCheck(this, Request);
   }
@@ -833,14 +834,15 @@ var Request = function () {
   }]);
 
   return Request;
-}();
+})();
 
-exports.default = new Request();
+exports['default'] = new Request();
+module.exports = exports['default'];
 
 },{}],11:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 function saferHTML(literalSections) {
@@ -875,16 +877,17 @@ function htmlEscape(str) {
   .replace(/'/g, '&#39;') //
   .replace(/`/g, '&#96;');
 }
-exports.default = saferHTML;
+exports['default'] = saferHTML;
+module.exports = exports['default'];
 
 },{}],12:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 /*globals NodeList*/
 
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
 var findAll = function findAll(selector) {
   return this.querySelectorAll(selector);
 };
@@ -972,7 +975,8 @@ var $$ = function $$(selector) {
   return document.findAll(selector);
 };
 
-exports.default = $$;
+exports['default'] = $$;
+module.exports = exports['default'];
 
 },{}]},{},[1,12,10])
 

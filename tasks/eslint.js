@@ -1,5 +1,5 @@
   'use strict';
-const gulp = require('gulp'),
+let gulp = require('gulp'),
   eslint = require('gulp-eslint'),
   watch = require('gulp-watch'),
   path = require('./paths.json');

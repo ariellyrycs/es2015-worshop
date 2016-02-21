@@ -2,18 +2,18 @@
 class Request {
   ajax(url, type, data) {
     var promise = new Promise((resolve, reject) => {
-      var http = new XMLHttpRequest();
-      http.open(type, url);
-      http.onreadystatechange = function () {
+      var xhr = new XMLHttpRequest();
+      xhr.open(type, url);
+      xhr.onreadystatechange = function () {
         if (this.readyState === this.DONE) {
           if (this.status === 200) resolve(this.response);
           else reject(this);
         }
       };
-      http.responseType = 'json';
-      http.setRequestHeader('Content-Type', 'application/json')
-      http.setRequestHeader('Accept', 'application/json');
-      http.send(data);
+      xhr.responseType = 'json';
+      xhr.setRequestHeader('Content-Type', 'application/json')
+      xhr.setRequestHeader('Accept', 'application/json');
+      xhr.send(data);
     });
     return promise;
   }
