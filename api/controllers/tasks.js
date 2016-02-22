@@ -1,7 +1,7 @@
 'use strict';
 
-const JSONDB = require('./../utils/db');
-const taskDB = new JSONDB('task');
+let JSONDB = require('./../utils/db');
+let taskDB = new JSONDB('task');
 
 
 class TaskController {
@@ -10,7 +10,7 @@ class TaskController {
   }
 
   findTaskById(req, res) {
-    var id = req.params.id;
+    let id = req.params.id;
     res.send({
       status: 'OK',
       data: taskDB.data.find(user => task.id === id)
@@ -30,7 +30,7 @@ class TaskController {
   }
 
   deleteTask(req, res) {
-    var taskId = req.params.id;
+    let taskId = req.params.id;
     if (!taskId) return res.sendStatus(400);
     //TODO manage error
     taskDB.deleteItem(taskId);

@@ -15,5 +15,3 @@ fs.readdirSync(gulpDir).forEach(fileName => {
 gulp.task('js', ['lint', 'build:js']);
 gulp.task('watch', ['watch:lint', 'js']);
 gulp.task('default', ['js']);
-//chrome://flags/#enable-javascript-harmony
-//To kill server use control + c

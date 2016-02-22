@@ -25,3 +25,5 @@ fs.readdirSync(routesPath).forEach(fileName => {
 
 app.listen(app.get('port'));
 console.log('Running on http://localhost:%s', app.get('port'));
+//chrome://flags/#enable-javascript-harmony
+//To kill server use control + c

@@ -1,6 +1,6 @@
   'use strict';
 
-var taskController = require('./../controllers/tasks');
+let taskController = require('./../controllers/tasks');
 
 module.exports = app => {
   app.get('/tasks', taskController.findAllTasks);

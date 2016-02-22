@@ -1,7 +1,7 @@
 'use strict';
 
-const JSONDB = require('./../utils/db');
-const userDB = new JSONDB('user');
+let JSONDB = require('./../utils/db');
+let userDB = new JSONDB('user');
 
 class UserController {
 
@@ -10,7 +10,7 @@ class UserController {
   }
 
   findUserById(req, res) {
-    var id = req.params.id;
+    let id = req.params.id;
     res.send({
       status: 'OK',
       data: userDB.data.find(user => user.id === id)
