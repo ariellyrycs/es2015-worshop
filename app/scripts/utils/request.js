@@ -1,8 +1,8 @@
 
 class Request {
   ajax(url, type, data) {
-    var promise = new Promise((resolve, reject) => {
-      var xhr = new XMLHttpRequest();
+    let promise = new Promise((resolve, reject) => {
+      let xhr = new XMLHttpRequest();
       xhr.open(type, url);
       xhr.onreadystatechange = function () {
         if (this.readyState === this.DONE) {

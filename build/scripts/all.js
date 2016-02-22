@@ -193,11 +193,11 @@ var _utilsRequest = require('./../utils/request');
 
 var _utilsRequest2 = _interopRequireDefault(_utilsRequest);
 
-var Base = function Base(fields, url) {
+var Base = function Base(fields, url, fieldSymbol) {
   _classCallCheck(this, Base);
 
   this._url = url !== undefined ? url : '';
-  this._fields = fields !== undefined ? fields : {};
+  this[fieldSymbol] = fields !== undefined ? fields : {};
 };
 
 exports['default'] = Base;
@@ -427,13 +427,15 @@ var _base = require('./base');
 
 var _base2 = _interopRequireDefault(_base);
 
+var fieldSymbol = Symbol();
+
 var Task = (function (_Base) {
   _inherits(Task, _Base);
 
   function Task(data) {
     _classCallCheck(this, Task);
 
-    _get(Object.getPrototypeOf(Task.prototype), 'constructor', this).call(this, data, '/task');
+    _get(Object.getPrototypeOf(Task.prototype), 'constructor', this).call(this, data, '/task', fieldSymbol);
   }
 
   /** @return {String}*/
@@ -441,35 +443,35 @@ var Task = (function (_Base) {
   _createClass(Task, [{
     key: 'id',
     get: function get() {
-      return this._fields.id;
+      return this[fieldSymbol].id;
     }
 
     /** @return {String}*/
   }, {
     key: 'creatorId',
     get: function get() {
-      return this._fields.creator_id;
+      return this[fieldSymbol].creator_id;
     }
 
     /** @return {String}*/
   }, {
     key: 'description',
     get: function get() {
-      return this._fields.description;
+      return this[fieldSymbol].description;
     }
 
     /** @return {String}*/
   }, {
     key: 'time',
     get: function get() {
-      return this._fields.time;
+      return this[fieldSymbol].time;
     }
 
     /** @return {String}*/
   }, {
     key: 'date',
     get: function get() {
-      return this._fields.date;
+      return this[fieldSymbol].date;
     }
   }]);
 
@@ -500,13 +502,15 @@ var _base = require('./base');
 
 var _base2 = _interopRequireDefault(_base);
 
+var fieldSymbol = Symbol();
+
 var User = (function (_Base) {
   _inherits(User, _Base);
 
   function User(data) {
     _classCallCheck(this, User);
 
-    _get(Object.getPrototypeOf(User.prototype), 'constructor', this).call(this, data, '/user');
+    _get(Object.getPrototypeOf(User.prototype), 'constructor', this).call(this, data, '/user', fieldSymbol);
   }
 
   /** @return {String}*/
@@ -514,28 +518,28 @@ var User = (function (_Base) {
   _createClass(User, [{
     key: 'id',
     get: function get() {
-      return this._fields.id;
+      return this[fieldSymbol].id;
     }
 
     /** @return {String}*/
   }, {
     key: 'name',
     get: function get() {
-      return this._fields.name;
+      return this[fieldSymbol].name;
     }
 
     /** @return {String}*/
   }, {
     key: 'lastName',
     get: function get() {
-      return this._fields.lastName;
+      return this[fieldSymbol].lastName;
     }
 
     /** @return {String}*/
   }, {
     key: 'email',
     get: function get() {
-      return this._fields.email;
+      return this[fieldSymbol].email;
     }
   }]);
 
@@ -728,7 +732,6 @@ var Fire = (function () {
   }, {
     key: "subscribe",
     value: function subscribe(eventName, context, callback) {
-      //do it witch es6
       var eventType = this.events[eventName] = this.events[eventName] || [];
       eventType.push({
         callback: callback,
@@ -797,17 +800,17 @@ var Request = (function () {
     key: 'ajax',
     value: function ajax(url, type, data) {
       var promise = new Promise(function (resolve, reject) {
-        var http = new XMLHttpRequest();
-        http.open(type, url);
-        http.onreadystatechange = function () {
+        var xhr = new XMLHttpRequest();
+        xhr.open(type, url);
+        xhr.onreadystatechange = function () {
           if (this.readyState === this.DONE) {
             if (this.status === 200) resolve(this.response);else reject(this);
           }
         };
-        http.responseType = 'json';
-        http.setRequestHeader('Content-Type', 'application/json');
-        http.setRequestHeader('Accept', 'application/json');
-        http.send(data);
+        xhr.responseType = 'json';
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Accept', 'application/json');
+        xhr.send(data);
       });
       return promise;
     }

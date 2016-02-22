@@ -11,8 +11,7 @@ class Fire {
   }
 
   subscribe(eventName, context, callback) {
-    //do it witch es6
-    var eventType = this.events[eventName] = this.events[eventName] || [];
+    let eventType = this.events[eventName] = this.events[eventName] || [];
     eventType.push({
       callback: callback,
       context: context

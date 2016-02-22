@@ -17,5 +17,8 @@
     "bootswatch-dist": "superhero",
     "form-serialize": "~0.6.0",
     "barn": "~0.2.0"
+  },
+  "dependencies": {
+    "deck.js": "~1.1.0"
   }
 }

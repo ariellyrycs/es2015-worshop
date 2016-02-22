@@ -1,9 +1,9 @@
 import rq  from './../utils/request';
 
 class Base {
-  constructor (fields, url) {
+  constructor (fields, url, fieldSymbol) {
     this._url = url !== undefined ? url : '';
-    this._fields = fields !== undefined ? fields : {};
+    this[fieldSymbol] = fields !== undefined ? fields : {};
   }
 }
 

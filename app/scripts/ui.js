@@ -25,7 +25,7 @@ class UI {
       <li>
         <a href='#' data-user-id="${user.id}">${user.name} ${user.lastName}</a>
       </li>`;
-    }, '')
+    }, '');
     /*User-task*/
     this._userInTask.innerHTML = users.reduce((usersHTML, user) => {
       return usersHTML + saferHTML`

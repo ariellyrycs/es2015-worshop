@@ -1,28 +1,30 @@
 import Base from './base';
 
+let fieldSymbol = Symbol();
+
 class User extends Base {
   constructor(data) {
-    super(data, '/user');
+    super(data, '/user', fieldSymbol);
   }
 
   /** @return {String}*/
   get id () {
-    return this._fields.id;
+    return this[fieldSymbol].id;
   }
 
   /** @return {String}*/
   get name () {
-    return this._fields.name;
+    return this[fieldSymbol].name;
   }
 
   /** @return {String}*/
   get lastName() {
-    return this._fields.lastName;
+    return this[fieldSymbol].lastName;
   }
 
   /** @return {String}*/
   get email() {
-    return this._fields.email;
+    return this[fieldSymbol].email;
   }
 }
 

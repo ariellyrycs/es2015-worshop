@@ -1,34 +1,35 @@
 import Base from './base';
 
+let fieldSymbol = Symbol();
 
 class Task extends Base {
   constructor(data) {
-    super(data, '/task');
+    super(data, '/task', fieldSymbol);
   }
 
   /** @return {String}*/
   get id() {
-    return this._fields.id;
+    return this[fieldSymbol].id;
   }
 
   /** @return {String}*/
   get creatorId() {
-    return this._fields.creator_id;
+    return this[fieldSymbol].creator_id;
   }
 
   /** @return {String}*/
   get description() {
-    return this._fields.description;
+    return this[fieldSymbol].description;
   }
 
   /** @return {String}*/
   get time() {
-    return this._fields.time;
+    return this[fieldSymbol].time;
   }
 
   /** @return {String}*/
   get date() {
-    return this._fields.date;
+    return this[fieldSymbol].date;
   }
 }
 

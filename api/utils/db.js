@@ -1,5 +1,5 @@
 'use strict';
-const fs = require('fs');
+let fs = require('fs');
 
 class JSONDB {
   constructor(fileName) {
@@ -17,19 +17,20 @@ class JSONDB {
   load() {
     fs.exists(this._dirName, exists => {
       if(exists) {
-        const data = fs.readFileSync(this._dirName, 'utf8');
-        var body = [];
+        let data = fs.readFileSync(this._dirName, 'utf8');
+        let body = [];
         try {
             body = JSON.parse(data);
         } catch(e) {
-            console.log(`initialazing ${this._dirName}`);
+            console.info(`initialazing ${this._dirName}`);
         }
         this.initializeLocalObj(body);
 
       } else {
         fs.writeFile(this._dirName, '[]', err => {
           if(err) {
-            return console.log(err);
+            console.error(err);
+            return;
           }
           this.initializeLocalObj([]);
         });
@@ -39,7 +40,7 @@ class JSONDB {
 
   save() {
     try {
-      var data = JSON.stringify(this._data, null, 4);
+      let data = JSON.stringify(this._data, null, 4);
       fs.writeFileSync(this._dirName, data, 'utf8');
     } catch (err) {
       throw new Error('Can\'t save the database', 2, err);
@@ -60,7 +61,7 @@ class JSONDB {
   }
 
   deleteItem(id) {
-    var index = this._data.findIndex(item => item && item === id);
+    let index = this._data.findIndex(item => item && item === id);
     this._data.splice(index, 1);
     this.save();
     return this;
