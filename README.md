@@ -19,6 +19,8 @@ or Wget:
     
 **Install node versions:** ```nvm i 5.0 && npm i 4.0```
 
+**Use node 5:** ```nvm use 5```
+
 **Install gulp and bower globally:** ``` npm i gulp bower -g```
 
 **Download dependencies:** ```npm i && bower i```
