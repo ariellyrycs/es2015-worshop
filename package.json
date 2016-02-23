@@ -1,14 +1,16 @@
 {
   "name": "es2015-worshop",
+  "email" : "ariellyrycs@hotmail.com",
   "version": "1.0.0",
   "description": "",
-  "main": "./build/scripts/main.js",
+  "repository":"https://github.com/ariellyrycs/es2015-worshop",
+  "main": "./build/scripts/all.js",
   "scripts": {
-    "start": "cd api/ && PORT=8000 node server && cd ../",
+    "start": "cd api/ && PORT=8000 node --harmony server && cd ../",
     "stop": "kill -9 $(lsof -i :8000 | awk '{if (NR!=1) {print}}' | awk '{print $2}')",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "ariellyrycs",
   "license": "ISC",
   "devDependencies": {
     "babelify": "^6.2.0",
