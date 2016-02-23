@@ -17,18 +17,18 @@ or Wget:
 
     wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
     
-**Install node versions:** ```nvm install 5.0 && npm install 4.0```
+**Install node versions:** ```nvm i 5.0 && npm i 4.0```
 
-**Install gulp and bower:** ``` npm i gulp bower -g```
+**Install gulp and bower globally:** ``` npm i gulp bower -g```
 
-**Install dependencies:** ```npm i && bower i```
+**Download dependencies:** ```npm i && bower i```
 
 ###Usage:
 
 **Run server:**
 ```npm start```
 
-**Compile Babel:** ```gulp```
+**Transpile es6:** ```gulp```
 
 **Port:** ```localhost:8080```
 
