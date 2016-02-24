@@ -1,6 +1,6 @@
 'use strict';
 
-let JSONDB = require('./../utils/db');
+let JSONDB = require('./../db/db');
 let taskDB = new JSONDB('task');
 
 

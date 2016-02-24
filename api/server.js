@@ -6,9 +6,9 @@ let express = require('express'),
   path = require('path'),
   bodyParser = require('body-parser'),
   favicon = require('serve-favicon'),
+  jsFiles = new RegExp('^.*\.(js)$', 'i');
 
-  jsFiles = new RegExp('^.*\.(js)$', 'i'),
-  routesPath = path.join(__dirname, 'routes');
+const ROUTES_PATH = path.join(__dirname, 'routes');
 
 
 
@@ -17,13 +17,9 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../build')));
 app.use(favicon(path.join(__dirname, '../build/favicon.png')));
 
-fs.readdirSync(routesPath).forEach(fileName => {
-  if(jsFiles.test(fileName)) {
-    require(path.join(routesPath, fileName))(app);
-  }
-});
+for(let fileName of fs.readdirSync(ROUTES_PATH)) {
+  if(jsFiles.test(fileName)) require(path.join(ROUTES_PATH, fileName))(app);
+}
 
 app.listen(app.get('port'));
 console.log('Running on http://localhost:%s', app.get('port'));
-//chrome://flags/#enable-javascript-harmony
-//To kill server use control + c
