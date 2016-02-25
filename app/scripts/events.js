@@ -14,6 +14,8 @@ let events = ((userCollection, taskCollection) => {
   let taskModalFrom = taskModal.find('form');
   let usersList = $$('#users');
   let showAllUsers = $$('#show-all-users');
+  let addNewUserButton = $$('#add-new-user');
+  let addNewTaskButton = $$('#add-new-task');
 
   fire.subscribe('userChange', null, () => {
     UI.hideModal();
@@ -71,8 +73,8 @@ let events = ((userCollection, taskCollection) => {
   });
 
   sourceModal.delegate('click', '[data-dismiss=modal]', () => UI.hideModal());
-  $$('#add-new-user').on('click', () => UI.showModal(userModal));
-  $$('#add-new-task').on('click', () => {
+  addNewUserButton.on('click', () => UI.showModal(userModal));
+  addNewTaskButton.on('click', () => {
     UI.showModal(taskModal);
     taskModalFrom.reset();
     UI.removeTaskEditableClass();
