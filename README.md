@@ -36,7 +36,7 @@ or Wget:
 
 
 
-<i>To stop server: </i> ```command + c``` of ```npm stop```
+<i>To stop server: </i> ```command + c``` or ```npm stop```
 
 
 Note: if you want to check the completed version of the project just do: ```gco completed``` 
