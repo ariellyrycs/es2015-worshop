@@ -26,6 +26,18 @@ class UI {
      </li>
      */
 
+    updateUsers(users) {
+        let userHTML = users.reduce((userHTML, user) => {
+            return userHTML + saferHTML`
+                 <li>
+                    <a href='#' data-user-id="${user.id}">${user.name} ${user.lastName}</a>
+                 </li>
+            `;
+        }, '');
+
+        this._usersListContainer.appendHTML(userHTML);
+    }
+
     /* users select options in addTask modal
      <option>Select user</option>
      <option value="userID>User Name</option>`;

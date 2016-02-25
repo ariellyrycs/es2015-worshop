@@ -4,7 +4,7 @@ import rq from './utils/request';
 import UI from './ui';
 import fire from './utils/fire';
 
-let events = (() => {
+let events = ((userCollection) => {
   let sourceModal = $$('#source-modal');
   let userModal = sourceModal.find('#user-modal');
   let taskModal = sourceModal.find('#task-modal');
@@ -17,6 +17,20 @@ let events = (() => {
   let addNewUserButton = $$('#add-new-user');
   let addNewTaskButton = $$('#add-new-task');
 
+  addNewUserButton.on('click', () => UI.showModal(userModal));
+
+  sourceModal.delegate('click', '[data-dismiss="modal"]', (e) => {
+    e.preventDefault();
+    UI.hideModal();
+  });
+
+  userModalForm.on('submit', (e) => {
+    e.preventDefault();
+    let data = formSerialize(e.target, {hash: true});
+    userCollection.add(data);
+    e.target.reset();
+    UI.hideModal();
+  })
 
 });
 
