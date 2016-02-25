@@ -17,7 +17,7 @@ or Wget:
 
     wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
     
-**Install node versions:** ```nvm i 5.0 && npm i 4.0```
+**Install node versions:** ```nvm i 5.0 && nvm i 4.0```
 
 **Switch to node 5:** ```nvm use 5```
 
