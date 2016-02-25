@@ -22,14 +22,14 @@ Node.prototype.on = function (type, callback, useCapture) {
 Node.prototype.append = function (tag, text) {
   var node = document.createElement(tag);
   if(text) {
-    var textnode = document.createTextNode(text);
-    node.appendChild(textnode);
+    var textNode = document.createTextNode(text);
+    node.appendChild(textNode);
   }
   return this.appendChild(node);
 };
 
 Node.prototype.appendHTML = function (HTML) {
-  this.innerHTML(HTML);
+  this.innerHTML = HTML;
 };
 
 Node.prototype.delegate = function (type, selector, handler) {
@@ -39,7 +39,7 @@ Node.prototype.delegate = function (type, selector, handler) {
     if (Array.prototype.indexOf.call(potentialElements, targetElement) >= 0) {
       handler.call(targetElement, event);
     }
-  }
+  };
   const useCapture = type === 'blur' || type === 'focus';
   this.on(type, dispatchEvent, useCapture);
 };
@@ -60,15 +60,15 @@ Node.prototype.data = function (dataName) {
   var attribElement = Array.from(this.attributes)
     .find(elem => elem.name === `data-${dataName}`);
   return attribElement.value;
-}
+};
 
 Node.prototype.attr = function (property, value) {
   this.setAttribute(property, value);
-}
+};
 
 Node.prototype.hasClass = function (cls) {
   return this.classList.contains(cls);
-}
+};
 
 Node.prototype.addClass = function (cls) {
   this.classList.add(cls);
