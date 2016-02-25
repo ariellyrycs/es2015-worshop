@@ -5,7 +5,7 @@
 
 **Clone the repository:**
 
-```git clone git@github.com:ariellyrycs/es2015-worshop.git```
+```gcl git@github.com:ariellyrycs/es2015-worshop.git```
 
 **Install nvm:** 
 
@@ -19,7 +19,7 @@ or Wget:
     
 **Install node versions:** ```nvm i 5.0 && npm i 4.0```
 
-**Use node 5:** ```nvm use 5```
+**Switch to node 5:** ```nvm use 5```
 
 **Install gulp and bower globally:** ``` npm i gulp bower -g```
 
@@ -37,3 +37,6 @@ or Wget:
 
 
 <i>To stop server: </i> ```command + c``` of ```npm stop```
+
+
+Note: if you want to check the completed version of the project just do: ```gco completed``` 
