@@ -18,41 +18,30 @@ class UI {
         this._filterUserId = null;
     }
 
-    updateUsers(users) {
-        /*User*/
-        this._usersListContainer.innerHTML = users.reduce((usersHTML, user) => {
-            return usersHTML + saferHTML`
-              <li>
-                <a href='#' data-user-id="${user.id}">${user.name} ${user.lastName}</a>
-              </li>`;
-        }, '');
-        /*User-task*/
-        this._userInTask.innerHTML = users.reduce((usersHTML, user) => {
-            return usersHTML + saferHTML`
-            <option value="${user.id}">${user.name} ${user.lastName}</option>`;
-        }, '<option>Select user</option>');
-    }
 
-    updateTasks(tasks) {
-        let filteredTasks = tasks;
-        if(this._filterUserId) {
-            filteredTasks = tasks.filter(task => task.creatorId === this._filterUserId)
-        }
+    /*
+     USERS list item
+     <li>
+     <a href='#' data-user-id="userID">user name</a>
+     </li>
+     */
 
-        this._tasksContainer.innerHTML = filteredTasks.reduce((tasksHTML, task, index) => {
-            if(task) {
-                return tasksHTML + saferHTML`
-        <tr data-task-id='${task.id}'>
-          <th scope="row">${index + 1}</th>
-          <td><input type="checkbox"></td>
-          <td>${task.description}</td>
-          <td>${task.time}</td>
-          <td>${task.date}</td>
-          <td><a href="#" class="btn btn-info btn-xs edit-task">Edit</a></td>
-        </tr>`;
-            }
-        }, '');
-    }
+    /* users select options in addTask modal
+     <option>Select user</option>
+     <option value="userID>User Name</option>`;
+     */
+
+    /*
+     task row
+     <tr data-task-id=''>
+     <th scope="row">index</th>
+     <td><input type="checkbox"></td>
+     <td>description</td>
+     <td>time</td>
+     <td>date</td>
+     <td><a href="#" class="btn btn-info btn-xs edit-task">Edit</a></td>
+     </tr>
+     */
 
     changeModalHeaderText(editable) {
         this._modalTaskTitle.innerText = editable ? 'Edit Task':'Add Task';
